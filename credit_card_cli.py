@@ -31,7 +31,9 @@ def cli():
     pass
 
 
-@cli.command()
+@cli.command(
+    help="validates the correctness of the checksum digit, according to Luhn's algorithm"
+)
 @click.argument("card_number")
 def validate(card_number: str):
     # ignore length since non-16 digits is technically allowed
@@ -40,14 +42,18 @@ def validate(card_number: str):
     click.get_current_context().exit(0 if is_valid else 1)
 
 
-@cli.command()
+@cli.command(
+    help="determines the checksum digit of a partial card number, according to Luhn's algorithm"
+)
 @click.argument("partial_card_number")
 def checksum(partial_card_number: str):
     checksum_val = calc_checksum(partial_card_number)
     click.echo(checksum_val)
 
 
-@cli.command()
+@cli.command(
+    help="generates a random 16 digit credit card number, guaranteed to be valid according to Luhn's algorithm. Most likely not valid card in reality"
+)
 def generate():
     generated_card_number = generate_card_number()
     click.echo(generated_card_number)
